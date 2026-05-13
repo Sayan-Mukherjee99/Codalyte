@@ -1,0 +1,189 @@
+# Lists & Dictionaries in Python 📚
+
+While basic variables hold a single piece of data (like one number or one string), modern applications need to process massive collections of data simultaneously. In Python, the two most ubiquitous and powerful data structures used to store collections are **Lists** and **Dictionaries**.
+
+---
+
+## 1. Lists: Ordered Sequences
+
+A **List** is a collection which is ordered, mutable (changeable), and allows duplicate values. Lists are created using square brackets `[]`.
+
+```python
+# A list of strings
+frameworks = ["Django", "Flask", "FastAPI"]
+
+# A list with mixed data types
+mixed_data = [42, "Hello", True, 3.14]
+
+# An empty list
+empty_list = []
+```
+
+### Accessing List Items
+Items in a list are accessed via their index. Python uses **zero-based indexing**, meaning the first item is at index `0`.
+
+```python
+colors = ["red", "green", "blue", "yellow"]
+
+print(colors[0])  # "red"
+print(colors[2])  # "blue"
+```
+
+Python also uniquely supports **negative indexing**. An index of `-1` refers to the last item, `-2` refers to the second to last item, etc.
+
+```python
+print(colors[-1]) # "yellow"
+```
+
+### List Slicing
+You can extract a sub-list (a slice) from a list by specifying a start and end index: `list[start:end]`. The end index is *not* included.
+
+```python
+alphabet = ["a", "b", "c", "d", "e", "f"]
+
+print(alphabet[1:4])  # ["b", "c", "d"]
+print(alphabet[:3])   # ["a", "b", "c"] (start defaults to 0)
+print(alphabet[3:])   # ["d", "e", "f"] (end defaults to length)
+```
+
+### Modifying Lists
+Because lists are mutable, you can add, remove, or change items after creation.
+
+```python
+fruits = ["apple", "banana"]
+
+# Add to the end
+fruits.append("cherry")
+
+# Insert at a specific index
+fruits.insert(1, "orange") 
+
+# Remove a specific item
+fruits.remove("banana")
+
+# Remove the last item (and return it)
+last_fruit = fruits.pop()
+```
+
+---
+
+## 2. List Comprehensions
+
+List comprehensions provide a shorter, more elegant syntax when you want to create a new list based on the values of an existing list.
+
+**Without Comprehension:**
+```python
+numbers = [1, 2, 3, 4, 5]
+squares = []
+for num in numbers:
+    squares.append(num * num)
+```
+
+**With Comprehension:**
+```python
+numbers = [1, 2, 3, 4, 5]
+squares = [num * num for num in numbers]
+```
+
+You can even add conditions:
+```python
+# Only square the EVEN numbers
+even_squares = [num * num for num in numbers if num % 2 == 0]
+```
+
+---
+
+## 3. Dictionaries: Key-Value Pairings
+
+While lists use numerical indexes, a **Dictionary** uses keys to map to values. They are unordered, mutable, and do not allow duplicate keys. Dictionaries are created using curly braces `{}`.
+
+> [!NOTE]  
+> If you are coming from JavaScript, a Python dictionary is identical in concept to a JSON object.
+
+```python
+user = {
+    "username": "coder_gal",
+    "email": "coder@example.com",
+    "age": 28,
+    "is_admin": False
+}
+```
+
+### Accessing Dictionary Items
+You access dictionary values by referring to their key name in square brackets, or by using the `.get()` method.
+
+```python
+# Using brackets (throws a KeyError if key doesn't exist)
+print(user["email"])
+
+# Using get() (returns None if key doesn't exist)
+print(user.get("phone"))
+
+# get() also allows a default fallback value
+print(user.get("phone", "No phone provided"))
+```
+
+### Modifying Dictionaries
+
+```python
+# Changing an existing value
+user["age"] = 29
+
+# Adding a new key-value pair
+user["location"] = "San Francisco"
+
+# Removing a key-value pair
+del user["is_admin"]
+
+# Removing and returning a value
+email = user.pop("email")
+```
+
+---
+
+## 4. Iterating Through Dictionaries
+
+You can loop through a dictionary to access its keys, its values, or both simultaneously.
+
+```python
+inventory = {"apples": 430, "bananas": 312, "oranges": 525}
+
+# Loop through keys
+for fruit in inventory:
+    print(fruit)
+
+# Loop through values
+for amount in inventory.values():
+    print(amount)
+
+# Loop through both keys and values
+for fruit, amount in inventory.items():
+    print(f"We have {amount} {fruit} left.")
+```
+
+---
+
+## 5. Nesting Data Structures
+
+In real-world applications, data is rarely flat. You will constantly nest lists within dictionaries, and dictionaries within lists.
+
+```python
+# A list of dictionaries (typical API response format)
+employees = [
+    {
+        "name": "Sarah",
+        "skills": ["Python", "AWS", "SQL"]
+    },
+    {
+        "name": "Mike",
+        "skills": ["JavaScript", "React"]
+    }
+]
+
+# Accessing Mike's first skill
+print(employees[1]["skills"][0])  # Output: JavaScript
+```
+
+### Performance Tip
+> [!TIP]
+> If you need to frequently check if an item exists (e.g., `if item in collection`), use a **Set** or the keys of a **Dictionary**. Checking membership in a list takes $O(N)$ time, but checking a Dictionary or Set takes $O(1)$ time because they use hash tables!

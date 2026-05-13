@@ -1,0 +1,114 @@
+# Introduction to MongoDB
+
+MongoDB is the world's most popular NoSQL database. Instead of tables and rows, MongoDB uses **documents** and **collections** — making it a natural fit for JavaScript and JSON-based applications.
+
+## What Makes MongoDB Different?
+
+| Feature | SQL | MongoDB |
+|---------|-----|---------|
+| Data model | Tables & rows | Documents (JSON-like) |
+| Schema | Fixed | Flexible |
+| Relationships | Joins | Embedded / References |
+| Query language | SQL | MongoDB Query Language (MQL) |
+| Scaling | Vertical | Horizontal (sharding) |
+
+## Core Concepts
+
+- **Document**: A JSON-like record `{ name: "Alice", age: 28 }`
+- **Collection**: A group of documents (like a table)
+- **Database**: A group of collections
+- **BSON**: Binary JSON — MongoDB's internal storage format
+
+## Connecting to MongoDB
+
+```javascript
+// Using MongoDB Shell (mongosh)
+mongosh "mongodb://localhost:27017"
+
+// Switch to a database (creates it if it doesn't exist)
+use codalyte_db
+```
+
+## CRUD Operations
+
+### Create (Insert)
+
+```javascript
+// Insert one document
+db.users.insertOne({
+  name: "Alice",
+  email: "alice@example.com",
+  age: 28,
+  skills: ["Python", "MongoDB"]
+})
+
+// Insert many
+db.users.insertMany([
+  { name: "Bob", age: 34 },
+  { name: "Charlie", age: 22 }
+])
+```
+
+### Read (Find)
+
+```javascript
+// Find all
+db.users.find()
+
+// Find with filter
+db.users.find({ age: { $gt: 25 } })
+
+// Find one
+db.users.findOne({ name: "Alice" })
+
+// Projection (only return name and email)
+db.users.find({}, { name: 1, email: 1, _id: 0 })
+```
+
+### Update
+
+```javascript
+// Update one
+db.users.updateOne(
+  { name: "Alice" },
+  { $set: { age: 29 } }
+)
+
+// Add to array
+db.users.updateOne(
+  { name: "Alice" },
+  { $push: { skills: "JavaScript" } }
+)
+```
+
+### Delete
+
+```javascript
+// Delete one
+db.users.deleteOne({ name: "Charlie" })
+
+// Delete many
+db.users.deleteMany({ age: { $lt: 18 } })
+```
+
+## Why MongoDB?
+
+- **Flexible schema**: No migrations needed when your data model changes.
+- **Scalable**: Built for horizontal scaling from day one.
+- **Developer-friendly**: Works naturally with JavaScript/Node.js.
+- **Atlas**: Fully managed cloud service available for free.
+
+## Challenge
+
+Insert a document representing yourself with your name, favorite programming language, and an array of skills. Then query it back!
+
+```javascript
+db.developers.insertOne({
+  name: "Your Name",
+  favLanguage: "MongoDB",
+  skills: ["NoSQL", "Aggregation", "Indexing"],
+  joinedAt: new Date()
+})
+
+db.developers.find({ name: "Your Name" }).pretty()
+```

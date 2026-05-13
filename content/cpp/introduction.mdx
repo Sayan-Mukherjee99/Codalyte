@@ -1,0 +1,120 @@
+# Introduction to C++
+
+C++ is a general-purpose programming language that extends C with object-oriented, generic, and functional programming features. It's the language behind game engines, browsers, and high-frequency trading systems.
+
+## C++ vs. C
+
+C++ is a superset of C — almost all valid C code is also valid C++. The key additions:
+
+- **Classes and Objects** — true OOP
+- **Templates** — generic programming
+- **STL** — Standard Template Library
+- **Exception handling** — try/catch/throw
+- **References** — safer than raw pointers
+- **Smart pointers** — automatic memory management
+
+## Your First C++ Program
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+    cout << "Hello, C++!" << endl;
+    return 0;
+}
+```
+
+Differences from C:
+- `#include <iostream>` instead of `<stdio.h>`
+- `cout <<` instead of `printf()`
+- `endl` flushes the buffer and adds a newline
+
+## Compiling C++
+
+```bash
+# Using G++
+g++ hello.cpp -o hello -std=c++17
+
+./hello
+```
+
+## Classes — The Core of C++
+
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Car {
+private:
+    string brand;
+    int year;
+
+public:
+    // Constructor
+    Car(string b, int y) : brand(b), year(y) {}
+
+    // Method
+    void display() {
+        cout << brand << " (" << year << ")" << endl;
+    }
+};
+
+int main() {
+    Car myCar("Tesla", 2024);
+    myCar.display();  // Tesla (2024)
+    return 0;
+}
+```
+
+## Modern C++ Features (C++11 and beyond)
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    vector<int> nums = {5, 2, 8, 1, 9, 3};
+    
+    // Range-based for loop
+    for (auto n : nums) {
+        cout << n << " ";
+    }
+    
+    // Lambda + sort
+    sort(nums.begin(), nums.end());
+    
+    // Auto keyword
+    auto sum = 0;
+    for (auto n : nums) sum += n;
+    cout << "\nSum: " << sum << endl;
+    
+    return 0;
+}
+```
+
+## Challenge
+
+Create a C++ class `Rectangle` with width and height, and a method to compute area:
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Rectangle {
+private:
+    double width, height;
+public:
+    Rectangle(double w, double h) : width(w), height(h) {}
+    double area() { return width * height; }
+};
+
+int main() {
+    Rectangle rect(5.0, 3.0);
+    cout << "Area: " << rect.area() << endl;
+    return 0;
+}
+```

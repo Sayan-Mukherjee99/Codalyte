@@ -1,0 +1,39 @@
+.shuffle-parent {
+  display: inline-block;
+  white-space: normal;
+  word-wrap: break-word;
+  will-change: transform;
+  line-height: 1;
+  visibility: hidden;
+}
+
+.shuffle-parent.is-ready {
+  visibility: visible;
+}
+
+.shuffle-char-wrapper {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: baseline;
+  position: relative;
+  line-height: 1.2;
+}
+
+.shuffle-inner {
+  display: inline-flex;
+  flex-direction: row; /* Default for left/right */
+  will-change: transform;
+}
+
+/* Adjustments for vertical shuffle */
+.shuffle-parent[data-direction="up"] .shuffle-inner,
+.shuffle-parent[data-direction="down"] .shuffle-inner {
+  flex-direction: column;
+}
+
+.shuffle-orig, .shuffle-scramble {
+  display: inline-block;
+  line-height: 1;
+  text-align: center;
+  flex-shrink: 0;
+}

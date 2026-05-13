@@ -1,0 +1,89 @@
+# Introduction to Java
+
+Java is a class-based, object-oriented programming language designed to be platform-independent via the Java Virtual Machine (JVM). Its mantra: **"Write once, run anywhere."**
+
+## Why Java?
+
+- **Enterprise standard**: Widely used in banking, Android apps, and large-scale systems.
+- **Strongly typed**: Catches errors at compile time.
+- **OOP first-class**: Everything is an object.
+- **Mature ecosystem**: Spring, Maven, Hibernate and more.
+
+## Your First Java Program
+
+```java
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}
+```
+
+Notice the structure: every Java program needs a **class** and a **main method**.
+
+## Java Basics
+
+### Data Types
+
+```java
+int age = 25;
+double height = 5.9;
+boolean isStudent = true;
+String name = "Alice";
+char grade = 'A';
+```
+
+### Printing Output
+
+```java
+System.out.println("Hello");           // prints with newline
+System.out.print("No newline here");   // prints without newline
+System.out.printf("Pi is %.2f%n", Math.PI); // formatted output
+```
+
+## Control Flow
+
+```java
+int score = 85;
+
+if (score >= 90) {
+    System.out.println("Grade: A");
+} else if (score >= 80) {
+    System.out.println("Grade: B");
+} else {
+    System.out.println("Grade: C or below");
+}
+```
+
+## Compiling and Running
+
+```bash
+# Compile
+javac HelloWorld.java
+
+# Run
+java HelloWorld
+```
+
+## Key Differences from Python
+
+| Feature | Python | Java |
+|---------|--------|------|
+| Typing | Dynamic | Static |
+| Syntax | Minimal | Verbose |
+| Compilation | Interpreted | Compiled to bytecode |
+| Semicolons | No | Yes |
+
+## Challenge
+
+Create a Java program that calculates the area of a circle given a radius of 7.5:
+
+```java
+public class CircleArea {
+    public static void main(String[] args) {
+        double radius = 7.5;
+        double area = Math.PI * radius * radius;
+        System.out.printf("Area: %.2f%n", area);
+    }
+}
+```

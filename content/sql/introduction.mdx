@@ -1,0 +1,89 @@
+# Introduction to SQL
+
+SQL (Structured Query Language) is the standard language for managing and querying relational databases. From tiny apps to global platforms, SQL is everywhere.
+
+## What is SQL?
+
+SQL lets you:
+- **Define** database structure (tables, columns, types)
+- **Manipulate** data (insert, update, delete)
+- **Query** data (select, filter, sort, aggregate)
+- **Control** access (permissions and roles)
+
+## Core SQL Statements
+
+### Creating a Table
+
+```sql
+CREATE TABLE users (
+    id      INT PRIMARY KEY AUTO_INCREMENT,
+    name    VARCHAR(100) NOT NULL,
+    email   VARCHAR(255) UNIQUE NOT NULL,
+    age     INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+### Inserting Data
+
+```sql
+INSERT INTO users (name, email, age)
+VALUES ('Alice', 'alice@example.com', 28),
+       ('Bob', 'bob@example.com', 34),
+       ('Charlie', 'charlie@example.com', 22);
+```
+
+### Selecting Data
+
+```sql
+-- Select all columns
+SELECT * FROM users;
+
+-- Select specific columns
+SELECT name, email FROM users;
+
+-- Filter with WHERE
+SELECT * FROM users WHERE age > 25;
+
+-- Sort results
+SELECT * FROM users ORDER BY name ASC;
+
+-- Limit results
+SELECT * FROM users LIMIT 10;
+```
+
+## Filtering with WHERE
+
+```sql
+-- Exact match
+SELECT * FROM users WHERE name = 'Alice';
+
+-- Pattern matching
+SELECT * FROM users WHERE name LIKE 'A%';
+
+-- Range
+SELECT * FROM users WHERE age BETWEEN 20 AND 30;
+
+-- NULL check
+SELECT * FROM users WHERE age IS NOT NULL;
+```
+
+## Common SQL Databases
+
+| Database   | Type        | Use Case |
+|------------|-------------|----------|
+| PostgreSQL | Relational  | General purpose |
+| MySQL      | Relational  | Web apps |
+| SQLite     | Embedded    | Mobile/desktop |
+| SQL Server | Relational  | Enterprise |
+
+## Challenge
+
+Write a query to find all users older than 25, sorted by name:
+
+```sql
+SELECT name, email, age
+FROM users
+WHERE age > 25
+ORDER BY name ASC;
+```

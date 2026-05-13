@@ -1,0 +1,103 @@
+# Introduction to C
+
+C is one of the oldest and most influential programming languages in the world. Created in 1972 by Dennis Ritchie at Bell Labs, C powers operating systems, embedded systems, and performance-critical software.
+
+## Why Learn C?
+
+- **Foundation of computing**: Linux, macOS, Windows kernels are written in C.
+- **Deep understanding**: Learn how computers really work — memory, pointers, stacks.
+- **Performance**: C is extremely fast with minimal overhead.
+- **Prerequisite**: Understanding C makes C++, Rust, and Go much easier.
+
+## Your First C Program
+
+```c
+#include <stdio.h>
+
+int main() {
+    printf("Hello, World!\n");
+    return 0;
+}
+```
+
+Breaking it down:
+- `#include <stdio.h>` — includes the standard I/O library.
+- `int main()` — entry point of every C program.
+- `printf()` — prints to standard output.
+- `return 0` — signals successful exit.
+
+## Compiling C Code
+
+```bash
+# Using GCC
+gcc hello.c -o hello
+
+# Run it
+./hello
+```
+
+## Variables and Types
+
+```c
+#include <stdio.h>
+
+int main() {
+    int age = 25;
+    float height = 5.9f;
+    double pi = 3.14159265;
+    char grade = 'A';
+    
+    printf("Age: %d\n", age);
+    printf("Height: %.1f\n", height);
+    printf("Pi: %.5f\n", pi);
+    printf("Grade: %c\n", grade);
+    
+    return 0;
+}
+```
+
+## Format Specifiers
+
+| Specifier | Type |
+|-----------|------|
+| `%d` | int |
+| `%f` | float/double |
+| `%c` | char |
+| `%s` | string |
+| `%p` | pointer |
+| `%ld` | long |
+
+## A Simple Loop
+
+```c
+#include <stdio.h>
+
+int main() {
+    // Count from 1 to 10
+    for (int i = 1; i <= 10; i++) {
+        printf("%d ", i);
+    }
+    printf("\n");
+    return 0;
+}
+```
+
+## Challenge
+
+Write a C program that calculates and prints the factorial of 5:
+
+```c
+#include <stdio.h>
+
+int main() {
+    int n = 5;
+    int factorial = 1;
+    
+    for (int i = 1; i <= n; i++) {
+        factorial *= i;
+    }
+    
+    printf("5! = %d\n", factorial);
+    return 0;
+}
+```

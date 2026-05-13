@@ -1,0 +1,180 @@
+# Functions & Scope in Python 🛠️
+
+As your code grows, putting everything in one giant script becomes impossible to manage. **Functions** allow you to group related code into a reusable block. You can pass data into a function (parameters) and it can return data back to you.
+
+## 1. Defining a Function
+
+In Python, you define a function using the `def` keyword, followed by the function name, parentheses `()`, and a colon `:`. 
+
+```python
+def greet():
+    print("Hello, welcome to Codalyte!")
+
+# Calling the function
+greet()
+```
+
+### Parameters and Arguments
+You can configure functions to accept inputs, known as **parameters**.
+
+```python
+def greet_user(first_name, last_name):
+    print(f"Hello {first_name} {last_name}!")
+
+# Passing arguments to the parameters
+greet_user("Alice", "Smith")
+```
+
+> [!NOTE]
+> **Parameter vs Argument:** A *parameter* is the variable listed inside the parentheses in the function definition. An *argument* is the actual value that is sent to the function when it is called.
+
+---
+
+## 2. Return Values
+
+Functions can process data and send a result back to the caller using the `return` keyword. Once a `return` statement is executed, the function immediately exits.
+
+```python
+def calculate_area(length, width):
+    area = length * width
+    return area
+
+# Storing the returned value in a variable
+living_room = calculate_area(10, 15)
+print(f"Area: {living_room} sq ft")
+```
+
+### Returning Multiple Values
+Python is unique because it allows functions to easily return multiple values at once by packing them into a tuple.
+
+```python
+def get_user_stats():
+    # Returns (level, health, score)
+    return 42, 100, 9500
+
+level, hp, score = get_user_stats()
+print(f"Level: {level}, HP: {hp}")
+```
+
+---
+
+## 3. Types of Arguments
+
+Python provides extreme flexibility in how you pass arguments to a function.
+
+### Keyword Arguments
+You can pass arguments using the parameter names. This improves readability and allows you to ignore the order.
+
+```python
+def create_profile(name, age):
+    print(f"{name} is {age} years old.")
+
+create_profile(age=25, name="John")
+```
+
+### Default Arguments
+You can provide default values for parameters. If the caller doesn't provide that argument, the default is used.
+
+```python
+def make_coffee(size="Medium"):
+    print(f"Brewing a {size} coffee.")
+
+make_coffee()          # Brewing a Medium coffee.
+make_coffee("Large")   # Brewing a Large coffee.
+```
+
+### Arbitrary Arguments (`*args` and `**kwargs`)
+Sometimes you don't know how many arguments will be passed into your function.
+
+*   `*args`: Gathers positional arguments into a **tuple**.
+*   `**kwargs`: Gathers keyword arguments into a **dictionary**.
+
+```python
+# *args example
+def calculate_sum(*numbers):
+    total = 0
+    for num in numbers:
+        total += num
+    return total
+
+print(calculate_sum(1, 2, 3, 4, 5)) # Outputs: 15
+
+# **kwargs example
+def print_user_info(**info):
+    for key, value in info.items():
+        print(f"{key}: {value}")
+
+print_user_info(name="Alice", location="NYC", role="Admin")
+```
+
+---
+
+## 4. Understanding Scope
+
+**Scope** defines the visibility of variables. Not all variables can be accessed from everywhere in a program.
+
+### Local vs Global Scope
+Variables created *inside* a function belong to the **local scope** of that function and cannot be accessed outside it. Variables created *outside* a function belong to the **global scope**.
+
+```python
+message = "I am Global" # Global scope
+
+def show_message():
+    local_msg = "I am Local" # Local scope
+    print(message)     # Can read global variables
+    print(local_msg)   
+
+show_message()
+# print(local_msg) # ERROR! local_msg does not exist here.
+```
+
+### The `global` Keyword
+If you need to *modify* a global variable from inside a function, you must explicitly declare it using the `global` keyword.
+
+```python
+score = 0
+
+def increase_score():
+    global score
+    score += 10
+
+increase_score()
+print(score) # Outputs: 10
+```
+
+> [!WARNING]
+> While using `global` is possible, it is generally considered a bad practice in large applications. It is much better to pass the variable as an argument and return the updated value!
+
+---
+
+## 5. Lambda Functions (Anonymous Functions)
+
+A lambda function is a small, anonymous function. It can take any number of arguments, but can only have **one single expression**.
+
+**Syntax:** `lambda arguments : expression`
+
+```python
+# A normal function
+def square(x):
+    return x * x
+
+# The exact same logic as a lambda
+square_lambda = lambda x: x * x
+
+print(square_lambda(5)) # Outputs: 25
+```
+
+Lambdas are incredibly useful when you need a simple function for a short period of time, such as sorting a list of complex objects:
+
+```python
+users = [
+    {"name": "Alice", "age": 30},
+    {"name": "Bob", "age": 20},
+    {"name": "Charlie", "age": 25}
+]
+
+# Sort by age using a lambda function
+users.sort(key=lambda u: u["age"])
+```
+
+Mastering functions is the key to writing modular, DRY (Don't Repeat Yourself) code!

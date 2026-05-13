@@ -1,0 +1,147 @@
+# Variables & Data Types in Python
+
+In Python, variables are created the moment you first assign a value to them. Unlike statically-typed languages (such as C++ or Java), you do not need to explicitly declare the type of a variable. Python uses **Dynamic Typing**, which means the interpreter infers the type of the value assigned to the variable at runtime.
+
+## 1. Creating Variables
+
+To create a variable, simply choose a name and use the `=` assignment operator:
+
+```python
+# A simple string assignment
+greeting = "Welcome to Codalyte!"
+
+# An integer assignment
+student_count = 42
+
+# A float assignment
+completion_percentage = 98.5
+
+# A boolean assignment
+is_learning = True
+```
+
+### Variable Naming Rules:
+- Must start with a letter (a-z, A-Z) or an underscore (`_`).
+- Cannot start with a number.
+- Can only contain alphanumeric characters and underscores (`A-z`, `0-9`, and `_`).
+- Are case-sensitive (`age`, `Age`, and `AGE` are three different variables).
+- **Best Practice:** Use `snake_case` for variable names in Python.
+
+---
+
+## 2. Fundamental Data Types
+
+Python has several built-in data types. Let's explore the most common ones.
+
+### A. Numeric Types
+Python supports three main numeric types:
+1. **`int`**: Whole numbers, positive or negative, without decimals. Python integers have arbitrary precision (they can be as large as your computer's memory allows).
+2. **`float`**: Real numbers with a floating-point representation.
+3. **`complex`**: Complex numbers with a real and imaginary part (e.g., `3 + 4j`).
+
+```python
+age = 25              # int
+temperature = 98.6    # float
+equation = 1j         # complex
+```
+
+### B. Sequence Types
+1. **`str` (String)**: A sequence of Unicode characters. Strings can be enclosed in single (`'`), double (`"`), or triple (`'''` or `"""`) quotes.
+2. **`list`**: An ordered, mutable (changeable) sequence of items.
+3. **`tuple`**: An ordered, immutable (unchangeable) sequence of items.
+
+```python
+name = "Alice"                  # str
+hobbies = ["coding", "reading"] # list
+coordinates = (10.0, 20.0)      # tuple
+```
+
+### C. Mapping Type
+- **`dict` (Dictionary)**: An unordered collection of key-value pairs. Keys must be immutable (like strings or numbers), and values can be of any type.
+
+```python
+user = {
+    "name": "Bob",
+    "age": 30,
+    "is_active": True
+}
+```
+
+### D. Set Types
+- **`set`**: An unordered collection of unique items. Useful for removing duplicates or performing mathematical set operations (union, intersection).
+
+```python
+unique_numbers = {1, 2, 3, 3, 3}
+print(unique_numbers)  # Output: {1, 2, 3}
+```
+
+### E. Boolean Type
+- **`bool`**: Represents one of two values: `True` or `False`. Often the result of comparison operations.
+
+```python
+is_python_fun = True
+is_raining = False
+```
+
+---
+
+## 3. Type Checking and Casting
+
+Since Python is dynamically typed, it's sometimes useful to check the type of a variable at runtime using the built-in `type()` function.
+
+```python
+x = 10
+print(type(x))  # <class 'int'>
+
+x = "Hello"
+print(type(x))  # <class 'str'>
+```
+
+### Casting (Type Conversion)
+You can explicitly convert one data type into another using constructor functions like `int()`, `float()`, and `str()`.
+
+```python
+# String to Integer
+num_str = "100"
+num_int = int(num_str)
+
+# Float to Integer (truncates decimal)
+pi = 3.14159
+pi_int = int(pi)  # 3
+
+# Integer to String
+age = 25
+age_str = str(age)
+print("I am " + age_str + " years old.")
+```
+
+---
+
+## 4. Visualizing Data Structures
+
+Here is a quick overview of how the core sequence and mapping types compare:
+
+| Type | Syntax Example | Mutable? | Ordered? | Duplicates? |
+|------|----------------|----------|----------|-------------|
+| **List** | `[1, 2, 3]` | Yes | Yes | Yes |
+| **Tuple** | `(1, 2, 3)` | No | Yes | Yes |
+| **Set** | `{1, 2, 3}` | Yes | No | No |
+| **Dict** | `{"A": 1}` | Yes | Preserved | Keys: No, Values: Yes |
+
+> [!TIP]
+> Use **Lists** when you have an ordered collection of similar items that might change. Use **Tuples** for fixed collections that shouldn't change. Use **Sets** for membership testing. Use **Dictionaries** for key-value lookups.
+
+---
+
+## 5. Challenge
+
+Can you predict the output of the following code snippet?
+
+```python
+a = "5"
+b = 2
+c = int(a) * b
+print(c)
+```
+
+**Answer:** It prints `10`. First, `"5"` is cast to the integer `5`, and then multiplied by `2`. If you didn't cast it and just did `a * b`, Python would replicate the string and print `"55"`!
