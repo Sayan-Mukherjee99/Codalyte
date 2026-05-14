@@ -1,36 +1,21 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Codalyte is a high-end, interactive learning platform designed for the modern developer. Built with a "Vibe-First" philosophy, it combines cutting-edge UI components with a seamless, zero-backend architecture to provide a world-class educational experience for Python, Java, SQL, C, C++, and MongoDB.✨ Key FeaturesPremium Visual Identity:Shuffle Logo: A custom brand entrance using GSAP-powered text scrambling for the "Codalyte" identity.Geometric Hero: A fluid, animated background using HeroGeometric to create depth and sophistication.Interactive Onboarding:Erikx Sign-In Flow: A professional "gatekeeper" experience that personalizes the platform with the user's name and goals using localStorage.High-End Interactions:Liquid Glass UI: Tactile, glossy buttons with advanced hover states for all primary actions.Curtain Theme Toggle: A dramatic "screen-sweep" transition between light and dark modes.Dynamic Learning Engine:MDX-Based Content: Lessons are rendered from local Markdown files for lightning-fast performance and professional syntax highlighting via Shiki.Orbital Navigation: A 3D radial timeline in the footer for navigating between different language paths.🛠️ Tech StackLayerTechnologyFrameworkNext.js 15 (App Router)StylingTailwind CSSAnimationsFramer Motion & GSAPComponentsshadcn/ui & 21st.devIconsLucide ReactStateClient-side Persistence (localStorage)📂 Project StructureBash├── app/                  # Next.js App Router (Layouts & Pages)
+├── components/           # UI Components
+│   ├── ui/               # 21st.dev & shadcn primitives
+│   └── Header.tsx        # Personalised Navbar with Shuffle Logo
+├── content/              # MDX Study Materials
+│   ├── python/           # Python Lessons
+│   ├── java/             # Java Lessons
+│   └── ...               # SQL, C, C++, MongoDB
+├── hooks/                # Custom hooks (useProgress, useLocalStorage)
+└── public/               # Static assets and icons
+🚀 Getting Started1. PrerequisitesEnsure you have Node.js 18+ and pnpm (or npm) installed.2. InstallationBashgit clone https://github.com/your-username/codalyte.git
+cd codalyte
+npm install
+3. Run Development ServerBashnpm run dev
+Open http://localhost:3000 to see your academy in action.📝 Adding Study MaterialsTo add new lessons, simply create a new .mdx file in the relevant folder under /content/.Example: /content/python/intro.mdxCode snippet---
+title: "Python Basics"
+id: "py-01"
+---
 
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Welcome to Python
+...your lesson content here...
