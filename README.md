@@ -13,6 +13,292 @@ Built with a **"Vibe-First"** philosophy, Codalyte combines cutting-edge UI comp
 - 🎯 **MDX-Powered Content** - Easy-to-manage study materials
 - 📱 **Responsive Design** - Works seamlessly on all devices
 
+## 🏗️ Architecture Overview
+
+### High-Level Application Flow
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        USER BROWSER                              │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                   │
+│  ┌──────────────────────────────────────────────────────────┐   │
+│  │              Next.js Frontend (React)                    │   │
+│  │  ┌────────────────────────────────────────────────────┐  │   │
+│  │  │         UI Components Layer                        │  │   │
+│  │  │  (shadcn/ui + 21st.dev + Custom Components)       │  │   │
+│  │  └────────────────────────────────────────────────────┘  │   │
+│  │                         ↕                                 │   │
+│  │  ┌────────────────────────────────────────────────────┐  │   │
+│  │  │      Custom React Hooks Layer                      │  │   │
+│  │  │  • useProgress → Track Learning Progress          │  │   │
+│  │  │  • useLocalStorage → Persist Data Locally         │  │   │
+│  │  └────────────────────────────────────────────────────┘  │   │
+│  │                         ↕                                 │   │
+│  │  ┌────────────────────────────────────────────────────┐  │   │
+│  │  │     Browser APIs Layer                             │  │   │
+│  │  │  • localStorage → Local Data Storage               │  │   │
+│  │  │  • sessionStorage → Session Data                   │  │   │
+│  │  │  • IndexedDB → Large Data Sets                     │  │   │
+│  │  └────────────────────────────────────────────────────┘  │   │
+│  └──────────────────────────────────────────────────────────┘  │
+│                                                                   │
+└─────────────────────────────────────────────────────────────────┘
+
+```
+
+### Data Flow Diagram
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    User Interaction                          │
+│        (Browse Lessons, Complete Exercises)                │
+└────────────────────┬────────────────────────────────────────┘
+                     │
+                     ↓
+        ┌────────────────────────────┐
+        │   React Event Handler      │
+        │  (onClick, onChange, etc)  │
+        └────────────────┬───────────┘
+                         │
+                         ↓
+        ┌────────────────────────────┐
+        │   Custom Hook              │
+        │   (useProgress/            │
+        │    useLocalStorage)        │
+        └────────────────┬───────────┘
+                         │
+                         ↓
+        ┌────────────────────────────┐
+        │   Update Local Storage     │
+        │   or Session State         │
+        └────────────────┬───────────┘
+                         │
+                         ↓
+        ┌────────────────────────────┐
+        │   Browser Storage API      │
+        │   (localStorage/           │
+        │    IndexedDB)              │
+        └─────────────────────────────┘
+
+```
+
+### Content Loading Pipeline
+
+```
+User Requests Content
+        ↓
+        ├─────────────────────────────────────────┐
+        │                                          │
+        ↓                                          ↓
+   Page Loads                              Component Renders
+   (Next.js SSG/ISR)                       ┌──────────────────┐
+        ↓                                  │  MDX File Found  │
+   ┌─────────────────────────────────┐    │  in /content     │
+   │ MDX Compiler                    │    └────────┬─────────┘
+   │ (Processes Markdown + JSX)      │           │
+   └────────────────┬────────────────┘           ↓
+                    │                    ┌──────────────────────┐
+                    │                    │ MDX Runtime          │
+                    │                    │ (Parse & Compile)    │
+                    │                    └────────┬─────────────┘
+                    │                             │
+                    └─────────────────┬───────────┘
+                                      │
+                                      ↓
+                    ┌─────────────────────────────────┐
+                    │ HTML Content Rendered to DOM    │
+                    │ + React Component Interactivity │
+                    └──────────────────┬──────────────┘
+                                       │
+                                       ↓
+                           User Sees Lesson Content
+
+```
+
+### State Management Architecture
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│                    Global State                               │
+│            (React Context / Custom Hooks)                    │
+├──────────────────────────────────────────────────────────────┤
+│                                                                │
+│  ┌────────────────────┐      ┌────────────────────┐         │
+│  │ User Progress      │      │ User Preferences   │         │
+│  │ ┌────────────────┐ │      │ ┌────────────────┐ │         │
+│  │ │ Lessons Done   │ │      │ │ Theme          │ │         │
+│  │ │ Exercises Pass │ │      │ │ Language Pref  │ │         │
+│  │ │ Points/Badges  │ │      │ │ Notifications  │ │         │
+│  │ └────────────────┘ │      │ └────────────────┘ │         │
+│  └────────┬───────────┘      └────────┬───────────┘         │
+│           │                            │                     │
+│           └──────────────┬─────────────┘                     │
+│                          │                                    │
+│                          ↓                                    │
+│            ┌──────────────────────────┐                      │
+│            │  localStorage API        │                      │
+│            │  Persistence Layer       │                      │
+│            └──────────────────────────┘                      │
+│                          │                                    │
+│                          ↓                                    │
+│            ┌──────────────────────────┐                      │
+│            │ Browser Storage          │                      │
+│            │ (JSON Serialized Data)   │                      │
+│            └──────────────────────────┘                      │
+│                                                                │
+└──────────────────────────────────────────────────────────────┘
+
+```
+
+### Project Directory Structure with Data Flow
+
+```
+codalyte/
+│
+├── app/                              # Next.js App Router
+│   ├── page.tsx                      # Home page entry
+│   ├── layout.tsx                    # Root layout
+│   ├── [language]/                   # Dynamic language routes
+│   │   ├── page.tsx                  # Language dashboard
+│   │   └── [lesson]/page.tsx         # Individual lesson pages
+│   └── api/                          # API routes (if needed)
+│
+├── components/                       # React Components
+│   ├── ui/                          # Design System
+│   │   ├── Button.tsx               # Reusable button
+│   │   ├── Card.tsx                 # Card component
+│   │   └── ...other primitives      # shadcn/ui components
+│   ├── Header.tsx                   # Navigation header
+│   ├── LessonCard.tsx               # Lesson preview card
+│   ├── ProgressBar.tsx              # User progress indicator
+│   └── Sidebar.tsx                  # Navigation sidebar
+│
+├── hooks/                           # Custom React Hooks
+│   ├── useProgress.ts               # Progress tracking logic
+│   ├── useLocalStorage.ts           # Local storage wrapper
+│   └── useLessonData.ts             # Lesson loading logic
+│
+├── content/                         # MDX Content Files
+│   ├── python/                      # Python Lessons
+│   │   ├── python-basics.mdx
+│   │   ├── data-structures.mdx
+│   │   └── ...more lessons
+│   ├── java/                        # Java Lessons
+│   ├── sql/                         # SQL Lessons
+│   ├── c/                           # C Lessons
+│   ├── cpp/                         # C++ Lessons
+│   └── mongodb/                     # MongoDB Lessons
+│
+├── public/                          # Static Assets
+│   ├── icons/                       # Icon files
+│   ├── images/                      # Image files
+│   └── ...static resources
+│
+├── styles/                          # Global Styles
+│   └── globals.css                  # Tailwind + Global CSS
+│
+├── package.json                     # Dependencies
+├── next.config.js                   # Next.js configuration
+├── tsconfig.json                    # TypeScript configuration
+└── tailwind.config.js               # Tailwind CSS configuration
+
+```
+
+### Component Interaction Diagram
+
+```
+┌──────────────────────────────────────────────────┐
+│            App (Root Component)                  │
+│        [Layout + Routing Setup]                  │
+└────────────────┬─────────────────────────────────┘
+                 │
+        ┌────────┴────────┬─────────────┐
+        │                 │             │
+        ↓                 ↓             ↓
+   ┌─────────┐      ┌──────────┐  ┌──────────┐
+   │ Header  │      │ Sidebar  │  │ MainPage │
+   │Component│      │Component │  │Component │
+   └────┬────┘      └────┬─────┘  └────┬─────┘
+        │                │             │
+        │                │    ┌────────┴────┐
+        │                │    │             │
+        ↓                ↓    ↓             ↓
+   ┌─────────────────────────────────────────────┐
+   │  useProgress Hook                            │
+   │  • Fetch user progress from localStorage    │
+   │  • Update progress when lesson completed    │
+   │  • Calculate achievements/badges            │
+   └─────────────────────────────────────────────┘
+              │
+              ↓
+   ┌─────────────────────────────────────────────┐
+   │  useLocalStorage Hook                        │
+   │  • Read/write to browser localStorage       │
+   │  • Serialize/deserialize JSON               │
+   │  • Handle storage quota limits               │
+   └─────────────────────────────────────────────┘
+              │
+              ↓
+   ┌─────────────────────────────────────────────┐
+   │  Browser APIs                                │
+   │  • localStorage.getItem()                   │
+   │  • localStorage.setItem()                   │
+   │  • localStorage.removeItem()                │
+   └─────────────────────────────────────────────┘
+
+```
+
+### Lesson Content Processing
+
+```
+Input: /content/python/lesson.mdx
+    │
+    ↓
+┌─────────────────────────────────┐
+│ MDX File Content                │
+│ ─────────────────────────────── │
+│ ---                             │
+│ title: "Python Basics"          │
+│ id: "py-01"                     │
+│ ---                             │
+│ # Lesson Title                  │
+│ Markdown content here...        │
+│ <CustomComponent />             │
+└──────────┬──────────────────────┘
+           │
+           ↓
+┌─────────────────────────────────┐
+│ MDX Compiler                    │
+│ (next-mdx-remote)              │
+│ • Parse YAML frontmatter       │
+│ • Compile Markdown             │
+│ • Handle JSX Components        │
+└──────────┬──────────────────────┘
+           │
+           ↓
+┌─────────────────────────────────┐
+│ Compiled React Component        │
+│ with metadata                   │
+└──────────┬──────────────────────┘
+           │
+           ↓
+┌─────────────────────────────────┐
+│ Next.js Page Component          │
+│ Renders with useProgress Hook   │
+└──────────┬──────────────────────┘
+           │
+           ↓
+┌─────────────────────────────────┐
+│ HTML Output                     │
+│ with Interactive Elements       │
+│ + Progress Tracking            │
+└─────────────────────────────────┘
+
+Output: User sees styled lesson with tracking
+
+```
+
 ## 📁 Project Structure
 
 ```
