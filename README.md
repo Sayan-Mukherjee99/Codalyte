@@ -4,6 +4,10 @@
 
 Built with a **"Vibe-First"** philosophy, Codalyte combines cutting-edge UI components with a seamless, zero-backend architecture for an exceptional learning experience.
 
+## 📖 About Codalyte
+
+Codalyte is a modern, web-based interactive learning platform that empowers developers to master multiple programming languages and technologies without the need for backend infrastructure. Whether you're a beginner exploring your first language or an experienced developer upskilling in new domains, Codalyte provides a beautifully designed, responsive learning environment that works entirely in your browser. With support for Python, Java, SQL, C, C++, MongoDB, and more, Codalyte delivers structured, MDX-powered lessons that seamlessly track your progress locally, ensuring your learning journey is personalized and persistent. The platform eliminates friction by requiring zero setup—just visit, learn, and grow at your own pace with an intuitive interface that prioritizes user experience and developer joy.
+
 ## ✨ Features
 
 - 🎨 **Modern UI** - Built with 21st.dev & shadcn primitives
@@ -18,9 +22,9 @@ Built with a **"Vibe-First"** philosophy, Codalyte combines cutting-edge UI comp
 ### High-Level Application Flow
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
+┌───────────────────────────────────────────────────────────────────[...]
 │                        USER BROWSER                              │
-├─────────────────────────────────────────────────────────────────┤
+├───────────────────────────────────────────────────────────────────[...]
 │                                                                   │
 │  ┌──────────────────────────────────────────────────────────┐   │
 │  │              Next.js Frontend (React)                    │   │
@@ -43,7 +47,7 @@ Built with a **"Vibe-First"** philosophy, Codalyte combines cutting-edge UI comp
 │  │  └────────────────────────────────────────────────────┘  │   │
 │  └──────────────────────────────────────────────────────────┘  │
 │                                                                   │
-└─────────────────────────────────────────────────────────────────┘
+└───────────────────────────────────────────────────────────────────[...]
 
 ```
 
@@ -180,7 +184,7 @@ codalyte/
 │   └── useLessonData.ts             # Lesson loading logic
 │
 ├── content/                         # MDX Content Files
-│   ├── python/                      # Python Lessons
+│   ���── python/                      # Python Lessons
 │   │   ├── python-basics.mdx
 │   │   ├── data-structures.mdx
 │   │   └── ...more lessons
