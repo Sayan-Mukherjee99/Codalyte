@@ -6,7 +6,7 @@ Built with a **"Vibe-First"** philosophy, Codalyte combines cutting-edge UI comp
 
 ## 📖 About Codalyte
 
-Codalyte is a modern, web-based interactive learning platform that empowers developers to master multiple programming languages and technologies without the need for backend infrastructure. Whether you're a beginner exploring your first language or an experienced developer upskilling in new domains, Codalyte provides a beautifully designed, responsive learning environment that works entirely in your browser. With support for Python, Java, SQL, C, C++, MongoDB, and more, Codalyte delivers structured, MDX-powered lessons that seamlessly track your progress locally, ensuring your learning journey is personalized and persistent. The platform eliminates friction by requiring zero setup—just visit, learn, and grow at your own pace with an intuitive interface that prioritizes user experience and developer joy.
+Codalyte is a modern, web-based interactive learning platform that empowers developers to master multiple programming languages and technologies without the need for backend infrastructure. Whether you're a beginner or an experienced developer, Codalyte offers a seamless, responsive learning experience with zero backend complexity.
 
 ## ✨ Features
 
@@ -22,285 +22,299 @@ Codalyte is a modern, web-based interactive learning platform that empowers deve
 ### High-Level Application Flow
 
 ```
-┌───────────────────────────────────────────────────────────────────[...]
-│                        USER BROWSER                              │
-├───────────────────────────────────────────────────────────────────[...]
-│                                                                   │
-│  ┌──────────────────────────────────────────────────────────┐   │
-│  │              Next.js Frontend (React)                    │   │
-│  │  ┌────────────────────────────────────────────────────┐  │   │
-│  │  │         UI Components Layer                        │  │   │
-│  │  │  (shadcn/ui + 21st.dev + Custom Components)       │  │   │
-│  │  └────────────────────────────────────────────────────┘  │   │
-│  │                         ↕                                 │   │
-│  │  ┌────────────────────────────────────────────────────┐  │   │
-│  │  │      Custom React Hooks Layer                      │  │   │
-│  │  │  • useProgress → Track Learning Progress          │  │   │
-│  │  │  • useLocalStorage → Persist Data Locally         │  │   │
-│  │  └────────────────────────────────────────────────────┘  │   │
-│  │                         ↕                                 │   │
-│  │  ┌────────────────────────────────────────────────────┐  │   │
-│  │  │     Browser APIs Layer                             │  │   │
-│  │  │  • localStorage → Local Data Storage               │  │   │
-│  │  │  • sessionStorage → Session Data                   │  │   │
-│  │  │  • IndexedDB → Large Data Sets                     │  │   │
-│  │  └────────────────────────────────────────────────────┘  │   │
-│  └──────────────────────────────────────────────────────────┘  │
-│                                                                   │
-└───────────────────────────────────────────────────────────────────[...]
-
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                      USER BROWSER                           ┃
+┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+┃                                                               ┃
+┃  ┌────────────────────────────────────────────────────────┐ ┃
+┃  │         Next.js Frontend (React)                       │ ┃
+┃  │                                                         │ ┃
+┃  │  ┌──────────────────────────────────────────────────┐ │ ┃
+┃  │  │  UI Components Layer                             │ │ ┃
+┃  │  │  (shadcn/ui + 21st.dev + Custom Components)     │ │ ┃
+┃  │  └──────────────────────────────────────────────────┘ │ ┃
+┃  │                      ⬇                                 │ ┃
+┃  │  ┌──────────────────────────────────────────────────┐ │ ┃
+┃  │  │ Custom React Hooks Layer                         │ │ ┃
+┃  │  │ • useProgress → Track Learning Progress         │ │ ┃
+┃  │  │ • useLocalStorage → Persist Data Locally        │ │ ┃
+┃  │  │ • useLessonData → Manage Lesson State           │ │ ┃
+┃  │  └──────────────────────────────────────────────────┘ │ ┃
+┃  │                      ⬇                                 │ ┃
+┃  │  ┌──────────────────────────────────────────────────┐ │ ┃
+┃  │  │ Browser APIs Layer                               │ │ ┃
+┃  │  │ • localStorage → Local Data Storage              │ │ ┃
+┃  │  │ • sessionStorage → Session Data                  │ │ ┃
+┃  │  │ • IndexedDB → Large Data Sets                    │ │ ┃
+┃  │  └──────────────────────────────────────────────────┘ │ ┃
+┃  └────────────────────────────────────────────────────────┘ ┃
+┃                                                               ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 ```
 
 ### Data Flow Diagram
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    User Interaction                          │
-│        (Browse Lessons, Complete Exercises)                │
-└────────────────────┬────────────────────────────────────────┘
+      ┌─────────────────────────────────┐
+      │    User Interaction             │
+      │ (Browse Lessons, Complete       │
+      │  Exercises, Track Progress)     │
+      └──────────────┬──────────────────┘
                      │
-                     ↓
-        ┌────────────────────────────┐
-        │   React Event Handler      │
-        │  (onClick, onChange, etc)  │
-        └────────────────┬───────────┘
-                         │
-                         ↓
-        ┌────────────────────────────┐
-        │   Custom Hook              │
-        │   (useProgress/            │
-        │    useLocalStorage)        │
-        └────────────────┬───────────┘
-                         │
-                         ↓
-        ┌────────────────────────────┐
-        │   Update Local Storage     │
-        │   or Session State         │
-        └────────────────┬───────────┘
-                         │
-                         ↓
-        ┌────────────────────────────┐
-        │   Browser Storage API      │
-        │   (localStorage/           │
-        │    IndexedDB)              │
-        └─────────────────────────────┘
-
+                     ⬇
+      ┌──────────────────────────────┐
+      │ React Event Handler          │
+      │ (onClick, onChange, etc)     │
+      └──────────────┬───────────────┘
+                     │
+                     ⬇
+      ┌──────────────────────────────┐
+      │ Custom Hook Triggered        │
+      │ • useProgress                │
+      │ • useLocalStorage            │
+      │ • useLessonData              │
+      └──────────────┬───────────────┘
+                     │
+                     ⬇
+      ┌──────────────────────────────┐
+      │ Update State & LocalStorage  │
+      │ (Persist data locally)       │
+      └──────────────┬───────────────┘
+                     │
+                     ⬇
+      ┌──────────────────────────────┐
+      │ Browser Storage API          │
+      │ • localStorage.setItem()     │
+      │ • IndexedDB.put()            │
+      └──────────────┬───────────────┘
+                     │
+                     ⬇
+      ┌──────────────────────────────┐
+      │ ✅ Data Persisted            │
+      │ UI Updated & Re-rendered     │
+      └──────────────────────────────┘
 ```
 
 ### Content Loading Pipeline
 
 ```
-User Requests Content
-        ↓
-        ├─────────────────────────────────────────┐
-        │                                          │
-        ↓                                          ↓
-   Page Loads                              Component Renders
-   (Next.js SSG/ISR)                       ┌──────────────────┐
-        ↓                                  │  MDX File Found  │
-   ┌─────────────────────────────────┐    │  in /content     │
-   │ MDX Compiler                    │    └────────┬─────────┘
-   │ (Processes Markdown + JSX)      │           │
-   └────────────────┬────────────────┘           ↓
-                    │                    ┌──────────────────────┐
-                    │                    │ MDX Runtime          │
-                    │                    │ (Parse & Compile)    │
-                    │                    └────────┬─────────────┘
-                    │                             │
-                    └─────────────────┬───────────┘
-                                      │
-                                      ↓
-                    ┌─────────────────────────────────┐
-                    │ HTML Content Rendered to DOM    │
-                    │ + React Component Interactivity │
-                    └──────────────────┬──────────────┘
-                                       │
-                                       ↓
-                           User Sees Lesson Content
-
+           🔄 User Requests Content
+                    │
+        ┌───────────┴────────────┐
+        │                        │
+        ⬇                        ⬇
+  📄 Page Load              🎨 Component Renders
+  (Next.js Route)          (React Mounting)
+        │                        │
+        ⬇                        ⬇
+  ┌──────────────────┐   ┌──────────────────────┐
+  │ MDX Compiler     │   │ Find MDX File        │
+  │ • Parse YAML     │   │ in /content/{lang}/  │
+  │ • Process JSX    │   └─────────┬────────────┘
+  │ • Generate Code  │             │
+  └────────┬─────────┘             ⬇
+           │              ┌──────────────────────┐
+           │              │ MDX Runtime Compiler │
+           │              │ • Parse Content      │
+           │              │ • Compile to React   │
+           └────────┬─────┴────────┬─────────────┘
+                    │             │
+                    └─────────────┬┘
+                                  │
+                                  ⬇
+                    ┌──────────────────────────┐
+                    │ Render React Component   │
+                    │ + Interactive Elements   │
+                    └─────────────┬────────────┘
+                                  │
+                                  ⬇
+                    ┌──────────────────────────┐
+                    │ 👁️ User Sees Lesson      │
+                    │ Beautiful & Interactive  │
+                    └──────────────────────────┘
 ```
 
 ### State Management Architecture
 
 ```
-┌──────────────────────────────────────────────────────────────┐
-│                    Global State                               │
-│            (React Context / Custom Hooks)                    │
-├──────────────────────────────────────────────────────────────┤
-│                                                                │
-│  ┌────────────────────┐      ┌────────────────────┐         │
-│  │ User Progress      │      │ User Preferences   │         │
-│  │ ┌────────────────┐ │      │ ┌────────────────┐ │         │
-│  │ │ Lessons Done   │ │      │ │ Theme          │ │         │
-│  │ │ Exercises Pass │ │      │ │ Language Pref  │ │         │
-│  │ │ Points/Badges  │ │      │ │ Notifications  │ │         │
-│  │ └────────────────┘ │      │ └────────────────┘ │         │
-│  └────────┬───────────┘      └────────┬───────────┘         │
-│           │                            │                     │
-│           └──────────────┬─────────────┘                     │
-│                          │                                    │
-│                          ↓                                    │
-│            ┌──────────────────────────┐                      │
-│            │  localStorage API        │                      │
-│            │  Persistence Layer       │                      │
-│            └──────────────────────────┘                      │
-│                          │                                    │
-│                          ↓                                    │
-│            ┌──────────────────────────┐                      │
-│            │ Browser Storage          │                      │
-│            │ (JSON Serialized Data)   │                      │
-│            └──────────────────────────┘                      │
-│                                                                │
-└──────────────────────────────────────────────────────────────┘
-
+┌─────────────────────────────────────────────────────────┐
+│          🌍 Global State Layer                          │
+│   (React Context + Custom Hooks)                       │
+├─────────────────────────────────────────────────────────┤
+│                                                         │
+│  ┌────────────────────┐    ┌─────────────────────────┐ │
+│  │ 📊 User Progress   │    │ ⚙️ User Preferences    │ │
+│  ├────────────────────┤    ├─────────────────────────┤ │
+│  │ • Lessons Done     │    │ • Theme (Light/Dark)    │ │
+│  │ • Exercises Pass   │    │ • Language Preference   │ │
+│  │ • Points/Badges    │    │ • Notifications         │ │
+│  │ • Streak Counter   │    │ • Accessibility        │ │
+│  └─────────┬──────────┘    └────────────┬────────────┘ │
+│            │                            │               │
+│            └────────────┬────────────────┘               │
+│                         │                               │
+│                         ⬇                               │
+│            ┌────────────────────────────┐               │
+│            │ 💾 localStorage API        │               │
+│            │ Persistence Layer          │               │
+│            └────────────┬────────────────┘               │
+│                         │                               │
+│                         ⬇                               │
+│            ┌────────────────────────────┐               │
+│            │ 🗄️ Browser Storage         │               │
+│            │ (JSON Serialized Data)     │               │
+│            └────────────────────────────┘               │
+│                                                         │
+└─────────────────────────────────────────────────────────┘
 ```
 
 ### Project Directory Structure with Data Flow
 
 ```
-codalyte/
+📁 codalyte/
 │
-├── app/                              # Next.js App Router
-│   ├── page.tsx                      # Home page entry
-│   ├── layout.tsx                    # Root layout
-│   ├── [language]/                   # Dynamic language routes
-│   │   ├── page.tsx                  # Language dashboard
-│   │   └── [lesson]/page.tsx         # Individual lesson pages
-│   └── api/                          # API routes (if needed)
+├── 📂 app/                              # Next.js App Router
+│   ├── page.tsx                         # Home page entry
+│   ├── layout.tsx                       # Root layout
+│   ├── 📂 [language]/                   # Dynamic language routes
+│   │   ├── page.tsx                     # Language dashboard
+│   │   └── 📂 [lesson]/
+│   │       └── page.tsx                 # Individual lesson pages
+│   └── 📂 api/                          # API routes (if needed)
 │
-├── components/                       # React Components
-│   ├── ui/                          # Design System
-│   │   ├── Button.tsx               # Reusable button
-│   │   ├── Card.tsx                 # Card component
-│   │   └── ...other primitives      # shadcn/ui components
-│   ├── Header.tsx                   # Navigation header
-│   ├── LessonCard.tsx               # Lesson preview card
-│   ├── ProgressBar.tsx              # User progress indicator
-│   └── Sidebar.tsx                  # Navigation sidebar
+├── 📂 components/                       # React Components
+│   ├── 📂 ui/                           # Design System
+│   │   ├── Button.tsx                   # Reusable button
+│   │   ├── Card.tsx                     # Card component
+│   │   └── ...other primitives          # shadcn/ui components
+│   ├── Header.tsx                       # Navigation header
+│   ├── LessonCard.tsx                   # Lesson preview card
+│   ├── ProgressBar.tsx                  # User progress indicator
+│   └── Sidebar.tsx                      # Navigation sidebar
 │
-├── hooks/                           # Custom React Hooks
-│   ├── useProgress.ts               # Progress tracking logic
-│   ├── useLocalStorage.ts           # Local storage wrapper
-│   └── useLessonData.ts             # Lesson loading logic
+├── 📂 hooks/                            # Custom React Hooks
+│   ├── useProgress.ts                   # Progress tracking logic
+│   ├── useLocalStorage.ts               # Local storage wrapper
+│   └── useLessonData.ts                 # Lesson loading logic
 │
-├── content/                         # MDX Content Files
-│   ���── python/                      # Python Lessons
+├── 📂 content/                          # MDX Content Files
+│   ├── 📂 python/                       # Python Lessons
 │   │   ├── python-basics.mdx
 │   │   ├── data-structures.mdx
 │   │   └── ...more lessons
-│   ├── java/                        # Java Lessons
-│   ├── sql/                         # SQL Lessons
-│   ├── c/                           # C Lessons
-│   ├── cpp/                         # C++ Lessons
-│   └── mongodb/                     # MongoDB Lessons
+│   ├── 📂 java/                         # Java Lessons
+│   ├── 📂 sql/                          # SQL Lessons
+│   ├── 📂 c/                            # C Lessons
+│   ├── 📂 cpp/                          # C++ Lessons
+│   └── 📂 mongodb/                      # MongoDB Lessons
 │
-├── public/                          # Static Assets
-│   ├── icons/                       # Icon files
-│   ├── images/                      # Image files
+├── 📂 public/                           # Static Assets
+│   ├── 📂 icons/                        # Icon files
+│   ├── 📂 images/                       # Image files
 │   └── ...static resources
 │
-├── styles/                          # Global Styles
-│   └── globals.css                  # Tailwind + Global CSS
+├── 📂 styles/                           # Global Styles
+│   └── globals.css                      # Tailwind + Global CSS
 │
-├── package.json                     # Dependencies
-├── next.config.js                   # Next.js configuration
-├── tsconfig.json                    # TypeScript configuration
-└── tailwind.config.js               # Tailwind CSS configuration
-
+├── package.json                         # Dependencies
+├── next.config.js                       # Next.js configuration
+├── tsconfig.json                        # TypeScript configuration
+└── tailwind.config.js                   # Tailwind CSS configuration
 ```
 
 ### Component Interaction Diagram
 
 ```
-┌──────────────────────────────────────────────────┐
-│            App (Root Component)                  │
-│        [Layout + Routing Setup]                  │
-└────────────────┬─────────────────────────────────┘
-                 │
-        ┌────────┴────────┬─────────────┐
-        │                 │             │
-        ↓                 ↓             ↓
-   ┌─────────┐      ┌──────────┐  ┌──────────┐
-   │ Header  │      │ Sidebar  │  │ MainPage │
-   │Component│      │Component │  │Component │
-   └────┬────┘      └────┬─────┘  └────┬─────┘
-        │                │             │
-        │                │    ┌────────┴────┐
-        │                │    │             │
-        ↓                ↓    ↓             ↓
-   ┌─────────────────────────────────────────────┐
-   │  useProgress Hook                            │
-   │  • Fetch user progress from localStorage    │
-   │  • Update progress when lesson completed    │
-   │  • Calculate achievements/badges            │
-   └─────────────────────────────────────────────┘
-              │
-              ↓
-   ┌─────────────────────────────────────────────┐
-   │  useLocalStorage Hook                        │
-   │  • Read/write to browser localStorage       │
-   │  • Serialize/deserialize JSON               │
-   │  • Handle storage quota limits               │
-   └─────────────────────────────────────────────┘
-              │
-              ↓
-   ┌─────────────────────────────────────────────┐
-   │  Browser APIs                                │
-   │  • localStorage.getItem()                   │
-   │  • localStorage.setItem()                   │
-   │  • localStorage.removeItem()                │
-   └─────────────────────────────────────────────┘
-
+                    ┌─────────────────┐
+                    │  🚀 App Root    │
+                    │ (Layout + Route)│
+                    └────────┬────────┘
+                             │
+               ┌─────────────┼──────────────┐
+               │             │              │
+               ⬇             ⬇              ⬇
+          ┌─────────┐   ┌──────────┐  ┌──────────┐
+          │ 🎯Header│   │ 📋Sidebar│  │ 📄Main   │
+          │Component│   │Component │  │Component │
+          └────┬────┘   └────┬─────┘  └────┬─────┘
+               │             │             │
+               │             │      ┌──────┴──────┐
+               │             │      │             │
+               ⬇             ⬇      ⬇             ⬇
+          ┌─────────────────────────────────────────┐
+          │ 🎣 useProgress Hook                     │
+          │ • Fetch progress from localStorage      │
+          │ • Update on lesson completion          │
+          │ • Calculate achievements/badges        │
+          └────────────────┬────────────────────────┘
+                           │
+                           ⬇
+          ┌─────────────────────────────────────────┐
+          │ 💾 useLocalStorage Hook                 │
+          │ • Read/write browser storage           │
+          │ • Serialize/deserialize JSON           │
+          │ • Handle storage quota limits          │
+          └────────────────┬────────────────────────┘
+                           │
+                           ⬇
+          ┌─────────────────────────────────────────┐
+          │ 🌐 Browser APIs                         │
+          │ • localStorage.getItem()                │
+          │ • localStorage.setItem()                │
+          │ • localStorage.removeItem()             │
+          └─────────────────────────────────────────┘
 ```
 
 ### Lesson Content Processing
 
 ```
-Input: /content/python/lesson.mdx
-    │
-    ↓
-┌─────────────────────────────────┐
-│ MDX File Content                │
-│ ─────────────────────────────── │
-│ ---                             │
-│ title: "Python Basics"          │
-│ id: "py-01"                     │
-│ ---                             │
-│ # Lesson Title                  │
-│ Markdown content here...        │
-│ <CustomComponent />             │
-└──────────┬──────────────────────┘
-           │
-           ↓
-┌─────────────────────────────────┐
-│ MDX Compiler                    │
-│ (next-mdx-remote)              │
-│ • Parse YAML frontmatter       │
-│ • Compile Markdown             │
-│ • Handle JSX Components        │
-└──────────┬──────────────────────┘
-           │
-           ↓
-┌─────────────────────────────────┐
-│ Compiled React Component        │
-│ with metadata                   │
-└──────────┬──────────────────────┘
-           │
-           ↓
-┌─────────────────────────────────┐
-│ Next.js Page Component          │
-│ Renders with useProgress Hook   │
-└──────────┬──────────────────────┘
-           │
-           ↓
-┌─────────────────────────────────┐
-│ HTML Output                     │
-│ with Interactive Elements       │
-│ + Progress Tracking            │
-└─────────────────────────────────┘
-
-Output: User sees styled lesson with tracking
-
+     📥 Input: /content/python/lesson.mdx
+                    │
+                    ⬇
+     ┌──────────────────────────────────┐
+     │ 📄 MDX File Content              │
+     ├──────────────────────────────────┤
+     │ ---                              │
+     │ title: "Python Basics"           │
+     │ id: "py-01"                      │
+     │ difficulty: "beginner"           │
+     │ ---                              │
+     │ # Lesson Title                   │
+     │ Markdown content here...         │
+     │ <InteractiveComponent />         │
+     └──────────┬───────────────────────┘
+                │
+                ⬇
+     ┌──────────────────────────────────┐
+     │ 🔧 MDX Compiler Processing       │
+     │ ├─ Parse YAML frontmatter       │
+     │ ├─ Compile Markdown to HTML     │
+     │ ├─ Process JSX Components       │
+     │ └─ Generate React Component     │
+     └──────────┬───────────────────────┘
+                │
+                ⬇
+     ┌──────────────────────────────────┐
+     │ ⚛️ Compiled React Component      │
+     │ (with metadata & styling)        │
+     └──────────┬───────────────────────┘
+                │
+                ⬇
+     ┌──────────────────────────────────┐
+     │ 📃 Next.js Page Component        │
+     │ (with useProgress Hook attached) │
+     └──────────┬───────────────────────┘
+                │
+                ⬇
+     ┌──────────────────────────────────┐
+     │ 🎨 HTML Output & Rendering       │
+     │ (styled lesson with tracking)    │
+     └──────────┬───────────────────────┘
+                │
+                ⬇
+     📤 Output: User sees beautiful,
+                interactive lesson with
+                real-time progress tracking
 ```
 
 ## 📁 Project Structure
@@ -424,9 +438,6 @@ const [data, setData] = useLocalStorage('key', initialValue);
 
 Contributions are welcome! Feel free to open issues and submit pull requests.
 
-
-
 ---
-
 
 **Made with ❤️ by [Codalyte](https://github.com/Sayan-Mukherjee99/Codalyte)**
