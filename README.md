@@ -440,4 +440,4 @@ Contributions are welcome! Feel free to open issues and submit pull requests.
 
 ---
 
-**Made with ❤️ by [Codalyte](https://github.com/Sayan-Mukherjee99/Codalyte)**
+**Made with ❤️ by [Codalyte](https://github.com/Sayan-Mukherjee99/Codalyte)*********
